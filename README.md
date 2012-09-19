@@ -1,13 +1,18 @@
-# Internet Archive collection torrent collector
+# Internet Archive collection torrent snatcher
 
-## Description
+### Description
 
-Grabs all of the torrents for a given collection via collection RSS feed.
+Grabs ~~all~~ 50 most recent ~~of the~~ torrents for a given collection via collection RSS feed.
 
-## Usage
+### Usage
 
     python ia-torrent.py
 
-## License
+### Todo
+
+1. Figure out an easy way to grab *all* of the items for a given collection.
+2. Make it a module
+
+### License
 
 ![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png "CC0")
