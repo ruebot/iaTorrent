@@ -2,16 +2,24 @@
 
 ### Description
 
-Grabs ~~all~~ 50 most recent ~~of the~~ torrents for a given collection via collection RSS feed.
+Grabs all of the torrents for a given collection.
+
+You'll need a json file for all the items in the collection with at least the title and identifier. You can get that from the Internet Archive (advanced search page)[http://archive.org/advancedsearch.php]. You'll need Query parameters as well. I grab the parameters from the 'All items (most recently added first) link on a collection page. 
+
+Example:
+
+(York University Library collection)[http://archive.org/details/YorkUniversity]
+Query parameters:
+    (collection:yorkuniversity AND format:pdf) AND -mediatype:collection
+
+Fields to return: identifier, title
+Number of results: 2608 (number of items in the collection)
+
+(Example)[http://archive.org/advancedsearch.php?q=%28collection%3Ayorkuniversity+AND+format%3Apdf%29+AND+-mediatype%3Acollection&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=2608&page=1&output=json]
 
 ### Usage
 
-    python ia-torrent.py
-
-### Todo
-
-1. Figure out an easy way to grab *all* of the items for a given collection.
-2. Make it a module
+    python ia-torrent.py url_for_json path_to_download_directory
 
 ### License
 

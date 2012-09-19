@@ -7,7 +7,7 @@ import sys, os, re, urllib, time, json
 #  sys.exit(-1)
 
 feed = 'http://archive.org/advancedsearch.php?q=%28collection%3Ayorkuniversity+AND+format%3Apdf%29+AND+-mediatype%3Acollection&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50000&page=1&output=json'
-download = '/tmp/ia-torrent'  #sys.argv[2]   #user supplied storage location
+download = '/tmp/ia-torrent'
 
 jsonData = urllib.urlopen(feed)
 data = json.load(jsonData)
@@ -19,7 +19,6 @@ for item in items:
   torrent = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
   urllib.urlretrieve(torrent, os.path.join(download, identifier + ".torrent"))
   print "Snatching: " + title + " from: " + torrent + "\n"
-  time.sleep(10)
-  print torrent
+  time.sleep(15)
 
 jsonData.close()
