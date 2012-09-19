@@ -19,5 +19,6 @@ for item in items:
   link = item.find('guid').string.strip()
   matchObj = re.match(r'https://archive.org/details/(.*)', link, re.M|re.I)
   identifier = matchObj.group(1)
-  urllib.urlretrieve("https://archive.org/download" + identifier + "/" + identifier +"_archive.torrent", os.path.join(download, identifier + ".torrent"))
-  print "Snatching " + title + "\n"
+  torrent = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
+  urllib.urlretrieve(torrent, os.path.join(download, identifier + ".torrent"))
+  print "Snatching: " + title + " from: " + torrent + "\n"
