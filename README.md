@@ -20,7 +20,7 @@ Number of results: 2608 (number of items in the collection)
 
 ### Usage
 
-    python ia-torrent.py url_for_json path_to_download_directory
+    python ia-torrent.py 'url_for_json' 'path_to_download_directory'
 
 ### License
 
