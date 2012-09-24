@@ -17,8 +17,8 @@ downloadDir = sys.argv[2]
 log_directory = os.path.join(downloadDir, 'logs')
 if not os.path.isdir(log_directory):
   os.mkdir(log_directory)
-logFile = os.path.join(downloadDir, 'ia-torrent' + time.strftime('%y_%m_%d') + '.log')
-logging.basicConfig(filename=logFile, level=logging.DEBUG)
+logFile = os.path.join(downloadDir + '/logs', 'ia-torrent' + time.strftime('%y_%m_%d') + '.log')
+logging.basicConfig(filename=logFile, format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 #feed = 'http://archive.org/advancedsearch.php?q=%28collection%3Ayorkuniversity+AND+format%3Apdf%29+AND+-mediatype%3Acollection&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=2608&page=1&output=json'
 
@@ -38,12 +38,13 @@ def dlfile(url, identifier):
 
   # Error handling
   except HTTPError, e:
-    logging.error("HTTP Error:", e.code, url + "\n")
+    logging.error("HTTP Error: %s %s \n", e.code, url)
   except URLError, e:
-    logging.error("URL Error:", e.reason, url + "\n")
+    logging.error("URL Error: %s %s \n", e.reason, url)
 
 def main():
-  
+ 
+  logging.info('Start')
   feed = sys.argv[1]
   request = Request(feed, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
   jsonData = urlopen(request)
@@ -58,9 +59,10 @@ def main():
     url = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
     dlfile(url, identifier)
     print "Snatching: " + title + " from: " + url + "\n"
-    time.sleep(0.5)
+    time.sleep(0.25)
 
   jsonData.close()
+  logging.info('Finish')
 
 if __name__ == '__main__':
   main()
