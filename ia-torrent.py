@@ -7,25 +7,24 @@ import json
 from urllib2 import Request, urlopen, URLError, HTTPError
 
 if len(sys.argv) != 3:
-  print('Please verify RSS feed & download location')
+  print("usage: ia-torrent 'url' '/path/to/download/directory'")
   sys.exit(-1)
 
 #feed = 'http://archive.org/advancedsearch.php?q=%28collection%3Ayorkuniversity+AND+format%3Apdf%29+AND+-mediatype%3Acollection&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=2608&page=1&output=json'
 
-def dlfile(url):
+def dlfile(url, identifier):
   # User agent
   request = Request(url, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
 
   # Download directory
   downloadDir = sys.argv[2]
 
-  # Open url with 
+  # Grab torrent link 
   try:
     f = urlopen(request)
-
     # Save file to download directory
-    with open(os.path.basename(url), "wb") as local_file:
-    #with open(os.path.join(downloadDir, url), "wb") as local_file:
+    #with open(os.path.basename(url), "wb") as local_file:
+    with open(os.path.join(downloadDir, identifier + ".torrent"), "wb") as local_file:
       local_file.write(f.read())
 
   # Error handling
@@ -48,7 +47,7 @@ def main():
     filename = identifier + ".torrent"
     items = data["response"]["docs"]
     url = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
-    dlfile(url)
+    dlfile(url, identifier)
     print "Snatching: " + title + " from: " + url + "\n"
     time.sleep(5)
 
