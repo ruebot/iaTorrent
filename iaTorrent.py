@@ -1,33 +1,42 @@
 #!/usr/bin/env python
 
+"""
+iaTorrent snatches all of the torrents for a given collection in the Internet Archive.
+"""
+
 import sys
 import os
 import time
 import json
 import logging
+import optparse
 from urllib2 import Request, urlopen, URLError, HTTPError
 
-if len(sys.argv) != 3:
-  print("usage: ia-torrent 'url' '/path/to/download/directory'")
-  sys.exit(-1)
 
-downloadDir = sys.argv[2]
+class iaTorrentOptionParser(optparse.OptionParser):
+  def __init__(self, *args, **opts):
+    optparse.OptionParser.__init__(self, *args, **opts)
+
+def _make_opt_parser():
+  parser = iaTorrentOptionParser(usage="usage: %prog --feed 'url' --downloadDir '/path/to/download/directory'", version="%prog 0.1.3")
+  parser.add_option("-f", "--feed", help="url to the json file", action="store", type="string", dest="feed")
+  parser.add_option("-d", "--downloadDir", help="path to the download directory", action="store", type="string", dest="downloadDir")
+  #(options, args) = parser.parse_args()
+
+  return parser
 
 # Set up logging
-log_directory = os.path.join(downloadDir, 'logs')
-if not os.path.isdir(log_directory):
-  os.mkdir(log_directory)
-logFile = os.path.join(downloadDir + '/logs', 'ia-torrent' + time.strftime('%y_%m_%d') + '.log')
-logging.basicConfig(filename=logFile, format='%(asctime)s %(message)s', level=logging.DEBUG)
+def _configure_logging():
+  log_directory = os.path.join(downloadDir, 'logs')
+  if not os.path.isdir(log_directory):
+    os.mkdir(log_directory)
+  logFile = os.path.join(downloadDir + '/logs', 'iaTorrent' + time.strftime('%y_%m_%d') + '.log')
+  logging.basicConfig(filename=logFile, format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
-#feed = 'http://archive.org/advancedsearch.php?q=%28collection%3Ayorkuniversity+AND+format%3Apdf%29+AND+-mediatype%3Acollection&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=2608&page=1&output=json'
 
 def dlfile(url, identifier):
   # User agent
   request = Request(url, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
-
-  # Download directory
-  downloadDir = sys.argv[2]
 
   # Grab torrent link 
   try:
@@ -42,10 +51,9 @@ def dlfile(url, identifier):
   except URLError, e:
     logging.error("URL Error: %s %s \n", e.reason, url)
 
-def main():
+def download_torrents(feed, downloadDir):
  
   logging.info('Start')
-  feed = sys.argv[1]
   request = Request(feed, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
   jsonData = urlopen(request)
   data = json.load(jsonData)
@@ -63,6 +71,18 @@ def main():
 
   jsonData.close()
   logging.info('Finish')
+  
 
 if __name__ == '__main__':
-  main()
+  opt_parser = _make_opt_parser()
+  opts, arg = opt_parser.parse_args()
+  _configure_logging()
+  log = logging.getLogger()
+
+  rc = 0
+
+  download_torrents(feed, downloadDir)
+
+  sys.exit(rc)
+
+

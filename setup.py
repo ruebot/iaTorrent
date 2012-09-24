@@ -6,13 +6,13 @@ description = \
     """
 
 setup(
-    name = 'ia-torrent',
-    version = '0.1.0',
+    name = 'iaTorrent',
+    version = '0.1.3',
     url = 'https://github.com/ruebot/ia-torrent',
     author = 'Nick Ruest',
     author_email = 'ruestn@gmail.com',
-    py_modules = ['ia-torrent'],
-    scripts = ['ia-torrent.py'],
+    py_modules = ['iaTorrent'],
+    scripts = ['iaTorrent.py'],
     description = description,
     platforms = ['POSIX'],
     test_suite = 'test',
