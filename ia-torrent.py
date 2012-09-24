@@ -4,11 +4,21 @@ import sys
 import os
 import time
 import json
+import logging
 from urllib2 import Request, urlopen, URLError, HTTPError
 
 if len(sys.argv) != 3:
   print("usage: ia-torrent 'url' '/path/to/download/directory'")
   sys.exit(-1)
+
+downloadDir = sys.argv[2]
+
+# Set up logging
+log_directory = os.path.join(downloadDir, 'logs')
+if not os.path.isdir(log_directory):
+  os.mkdir(log_directory)
+logFile = os.path.join(downloadDir, 'ia-torrent' + time.strftime('%y_%m_%d') + '.log')
+logging.basicConfig(filename=logFile, level=logging.DEBUG)
 
 #feed = 'http://archive.org/advancedsearch.php?q=%28collection%3Ayorkuniversity+AND+format%3Apdf%29+AND+-mediatype%3Acollection&fl%5B%5D=identifier&fl%5B%5D=title&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=2608&page=1&output=json'
 
@@ -23,15 +33,14 @@ def dlfile(url, identifier):
   try:
     f = urlopen(request)
     # Save file to download directory
-    #with open(os.path.basename(url), "wb") as local_file:
     with open(os.path.join(downloadDir, identifier + ".torrent"), "wb") as local_file:
       local_file.write(f.read())
 
   # Error handling
   except HTTPError, e:
-    print "HTTP Error:", e.code, url
+    logging.error("HTTP Error:", e.code, url + "\n")
   except URLError, e:
-    print "URL Error:", e.reason, url
+    logging.error("URL Error:", e.reason, url + "\n")
 
 def main():
   
@@ -49,7 +58,7 @@ def main():
     url = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
     dlfile(url, identifier)
     print "Snatching: " + title + " from: " + url + "\n"
-    time.sleep(5)
+    time.sleep(0.5)
 
   jsonData.close()
 
