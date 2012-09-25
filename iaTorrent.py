@@ -9,21 +9,13 @@ import os
 import time
 import json
 import logging
-import optparse
+import argparse
 from urllib2 import Request, urlopen, URLError, HTTPError
 
 
-class iaTorrentOptionParser(optparse.OptionParser):
-  def __init__(self, *args, **opts):
-    optparse.OptionParser.__init__(self, *args, **opts)
-
-def _make_opt_parser():
-  parser = iaTorrentOptionParser(usage="usage: %prog --feed 'url' --downloadDir '/path/to/download/directory'", version="%prog 0.1.3")
-  parser.add_option("-f", "--feed", help="url to the json file", action="store", type="string", dest="feed")
-  parser.add_option("-d", "--downloadDir", help="path to the download directory", action="store", type="string", dest="downloadDir")
-  #(options, args) = parser.parse_args()
-
-  return parser
+parser = argparse.ArgumentParser(description="usage: %prog --feed 'url' --downloadDir '/path/to/download/directory'")
+parser.add_argument("-f", "--feed", help="url to the json file")
+parser.add_argument("-d", "--downloadDir", help="path to the download directory")
 
 # Set up logging
 def _configure_logging():
@@ -51,7 +43,7 @@ def dlfile(url, identifier):
   except URLError, e:
     logging.error("URL Error: %s %s \n", e.reason, url)
 
-def download_torrents(feed, downloadDir):
+def download_torrents(feed):
  
   logging.info('Start')
   request = Request(feed, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
@@ -74,14 +66,15 @@ def download_torrents(feed, downloadDir):
   
 
 if __name__ == '__main__':
-  opt_parser = _make_opt_parser()
-  opts, arg = opt_parser.parse_args()
+  args = parser.parse_args()
+  feed = args.feed
+  downloadDir = args.downloadDir
   _configure_logging()
   log = logging.getLogger()
 
   rc = 0
 
-  download_torrents(feed, downloadDir)
+  download_torrents(feed)
 
   sys.exit(rc)
 
