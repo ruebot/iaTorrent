@@ -25,6 +25,7 @@ iaTorrent is a single-file python module that you can drop into your project as 
     pip install bagit
 
 or
+
     cd ia-torrent
     sudo python setup.py install
 
