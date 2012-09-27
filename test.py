@@ -19,7 +19,6 @@ class TestTorrent(unittest.TestCase):
     self.tmpdir = tempfile.mkdtemp()
     if os.path.isdir(self.tmpdir):
       shutil.rmtree(self.tmpdir)
-    shutil.copytree('test-data', self.tmpdir)
 
   def tearDown(self):
     if os.path.isdir(self.tmpdir):
@@ -30,10 +29,10 @@ class TestTorrent(unittest.TestCase):
     downloadDir = self.tmpdir
     #identifier = '1714essaiphiloso00lockuoft'
     #url = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
-    torrent = iaTorrent.main(feed, downloadDir)
+    torrent = iaTorrent.download_torrents(feed)
 
     # Check and see if we've connected, and downloaded a torrent
-    self.assertTrue(os.path.isfile(j(self.tmpdir, '1714essaiphiloso00lockuoft_archive.torrent')))
+    self.assertTrue(os.path.isfile(j(self.tmpdir, 'saintptersboyork00rauoft_archive.torrent')))
 
      
 
