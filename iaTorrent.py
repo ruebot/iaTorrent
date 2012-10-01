@@ -27,6 +27,10 @@ def _configure_logging():
 
 
 def dlfile(url, identifier):
+  ''' (string, string) -> string
+  
+  Takes the url and identifier created in download_torrents and snags each torrent file.
+  '''
   # User agent
   request = Request(url, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
 
@@ -43,8 +47,12 @@ def dlfile(url, identifier):
   except URLError, e:
     logging.error("URL Error: %s %s \n", e.reason, url)
 
-def download_torrents(feed):
- 
+def download_torrents(feed, downloadDir):
+  ''' (string, string) -> string
+
+  Takes user supplied arguements for feed and downloadDir, and snatches a collection of torrents based on that
+  '''
+
   logging.info('Start')
   request = Request(feed, headers={'User-Agent': "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"})
   jsonData = urlopen(request)
@@ -74,7 +82,7 @@ if __name__ == '__main__':
 
   rc = 0
 
-  download_torrents(feed)
+  download_torrents(feed, downloadDir)
 
   sys.exit(rc)
 
