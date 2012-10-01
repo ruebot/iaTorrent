@@ -36,7 +36,7 @@ def _configure_logging():
   logging.basicConfig(filename=logFile, format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
 
-def dlfile(url, identifier):
+def dlfile(url, identifier, downloadDir):
   ''' (string, string) -> string
   
   Takes the url and identifier created in download_torrents and snags each torrent file.
@@ -75,7 +75,7 @@ def download_torrents(feed, downloadDir):
     filename = identifier + ".torrent"
     items = data["response"]["docs"]
     url = "https://archive.org/download/" + identifier + "/" + identifier +"_archive.torrent"
-    dlfile(url, identifier)
+    dlfile(url, identifier, downloadDir)
     print "Snatching: " + title + " from: " + url + "\n"
     time.sleep(0.25)
 

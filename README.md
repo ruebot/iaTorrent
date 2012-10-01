@@ -45,8 +45,6 @@ Or from the commandline:
 
 ### Test suite
 
-I'm working setting up proper tests for this. At the moment, the current tests are not working right.
-
     python setup.py test
 
 ### Development
