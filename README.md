@@ -35,7 +35,7 @@ From python you can use the iaTorrent module to snatch a collection of torrents 
 
 ```python
 import iaTorrent
-torrent = iaTorrent.Torrent('url_for_json' 'path_to_download_directory')
+torrent = iaTorrent.download_torrents('url_for_json', 'path_to_download_directory')
 ```
 
 Or from the commandline:

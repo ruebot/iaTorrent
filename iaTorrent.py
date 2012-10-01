@@ -12,10 +12,20 @@ import logging
 import argparse
 from urllib2 import Request, urlopen, URLError, HTTPError
 
+# iaTorrentArgParaser is for command line program
+#class iaTorrentArgParser(argparse.ArgumentParser):
+#  def __init__(self, *args):
+#    argparse.ArgumentParser.__init__(self, *args)
 
-parser = argparse.ArgumentParser(description="usage: %prog --feed 'url' --downloadDir '/path/to/download/directory'")
-parser.add_argument("-f", "--feed", help="url to the json file")
-parser.add_argument("-d", "--downloadDir", help="path to the download directory")
+def _make_arg_parser():
+  parser = argparse.ArgumentParser(description="usage: iaTorrent.py -f 'url' -d '/path/to/download/directory'")
+  parser.add_argument("-f", "--feed", help="url to the json file")
+  parser.add_argument("-d", "--downloadDir", help="path to the download directory")
+  return parser
+  
+#parser = argparse.ArgumentParser(description="usage: iaTorrent.py -f 'url' -d '/path/to/download/directory'")
+#parser.add_argument("-f", "--feed", help="url to the json file")
+#parser.add_argument("-d", "--downloadDir", help="path to the download directory")
 
 # Set up logging
 def _configure_logging():
@@ -74,9 +84,15 @@ def download_torrents(feed, downloadDir):
   
 
 if __name__ == '__main__':
-  args = parser.parse_args()
-  feed = args.feed
-  downloadDir = args.downloadDir
+  #args = parser.parse_args()
+  #feed = args.feed
+  #downloadDir = args.downloadDir
+  arg_parser = _make_arg_parser()
+  args = arg_parser.parse_args()
+  if args.feed:
+    feed = args.feed
+  if args.downloadDir:
+    downloadDir = args.downloadDir
   _configure_logging()
   log = logging.getLogger()
 
