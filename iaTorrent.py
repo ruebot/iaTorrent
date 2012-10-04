@@ -2,6 +2,16 @@
 
 """
 iaTorrent snatches all of the torrents for a given collection in the Internet Archive.
+
+From python you can use the iaTorrent module to snatch a collection of torrents like this:
+
+    import iaTorrent
+    torrent = iaTorrent.download_torrents('url_for_json', 'path_to_download_directory')
+
+Or from the commandline:
+
+    iaTorrent.py -f 'url_for_json' -d 'path_to_download_directory'
+
 """
 
 import sys
@@ -12,21 +22,12 @@ import logging
 import argparse
 from urllib2 import Request, urlopen, URLError, HTTPError
 
-# iaTorrentArgParaser is for command line program
-#class iaTorrentArgParser(argparse.ArgumentParser):
-#  def __init__(self, *args):
-#    argparse.ArgumentParser.__init__(self, *args)
-
 def _make_arg_parser():
   parser = argparse.ArgumentParser(description="usage: iaTorrent.py -f 'url' -d '/path/to/download/directory'")
   parser.add_argument("-f", "--feed", help="url to the json file")
   parser.add_argument("-d", "--downloadDir", help="path to the download directory")
   return parser
   
-#parser = argparse.ArgumentParser(description="usage: iaTorrent.py -f 'url' -d '/path/to/download/directory'")
-#parser.add_argument("-f", "--feed", help="url to the json file")
-#parser.add_argument("-d", "--downloadDir", help="path to the download directory")
-
 # Set up logging
 def _configure_logging():
   log_directory = os.path.join(downloadDir, 'logs')
@@ -84,9 +85,6 @@ def download_torrents(feed, downloadDir):
   
 
 if __name__ == '__main__':
-  #args = parser.parse_args()
-  #feed = args.feed
-  #downloadDir = args.downloadDir
   arg_parser = _make_arg_parser()
   args = arg_parser.parse_args()
   if args.feed:
@@ -101,5 +99,3 @@ if __name__ == '__main__':
   download_torrents(feed, downloadDir)
 
   sys.exit(rc)
-
-
