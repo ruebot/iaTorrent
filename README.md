@@ -1,5 +1,7 @@
 # iaTorrent (Internet Archive torrent snatcher)
 
+[![Build Status](https://secure.travis-ci.org/ruebot/ia-torrent.png)](http://travis-ci.org/ruebot/ia-torrent)
+
 ### Description
 
 iaTorrent snatches all of the torrents for a given collection in the Internet Archive.
