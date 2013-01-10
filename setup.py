@@ -15,6 +15,7 @@ setup(
     name = 'iaTorrent',
     version = '0.1.4',
     url = 'https://github.com/ruebot/ia-torrent',
+    install_requires=['pyandoc'],
     author = 'Nick Ruest',
     author_email = 'ruestn@gmail.com',
     py_modules = ['iaTorrent'],
