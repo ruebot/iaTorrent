@@ -8,7 +8,7 @@ doc.markdown = open('README.md').read()
 
 description = \
     """
-    This package can be used to snatch torrents for each collection object from a given Internet archive collection.
+    This module can be used to snatch torrents for each collection object from a given Internet archive collection.
     """
 
 setup(
