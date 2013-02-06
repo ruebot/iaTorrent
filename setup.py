@@ -4,6 +4,8 @@ description = \
     """
     This module can be used to snatch torrents for each collection object from a given Internet archive collection.
     """
+with open('README.rst') as file:
+  long_description = file.read()
 
 setup(
     name = 'iaTorrent',
@@ -14,6 +16,7 @@ setup(
     py_modules = ['iaTorrent'],
     scripts = ['iaTorrent.py'],
     description = description,
+    long_description = long_description,
     platforms = ['POSIX'],
     test_suite = 'test',
     classifiers = [
