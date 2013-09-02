@@ -1,6 +1,6 @@
 # iaTorrent (Internet Archive torrent snatcher)
 
-[![Build Status](https://secure.travis-ci.org/ruebot/ia-torrent.png)](http://travis-ci.org/ruebot/ia-torrent)
+[![Build Status](https://secure.travis-ci.org/ruebot/iaTorrent.png)](http://travis-ci.org/ruebot/iaTorrent)
 
 ### Description
 
